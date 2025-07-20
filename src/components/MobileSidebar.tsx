@@ -1,4 +1,3 @@
-
 import { X, Home, Scale, Headphones, Library, Bot, User, Settings, HelpCircle, 
          GitBranch, Monitor, Play, Folder, Newspaper, Film, Brain, BookOpen, 
          FileText, Search, GraduationCap, Calendar, Clock, Award, Target,
@@ -105,8 +104,8 @@ export const MobileSidebar = ({ isOpen, onClose }: MobileSidebarProps) => {
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg animate-legal-shimmer overflow-hidden">
               <img 
-                src="https://imgur.com/M5Qu1m8.png" 
-                alt="Direito Premium" 
+                src="https://imgur.com/rrouo0U.png" 
+                alt="Direito" 
                 className="w-full h-full object-contain"
               />
             </div>

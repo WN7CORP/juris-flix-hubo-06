@@ -222,7 +222,7 @@ export const Loja = () => {
         /* Iframe da Loja */
         <div className="w-full" style={{ height: 'calc(100vh - 56px)' }}>
           <iframe
-            src="https://preview--barba-growth-journey-76.lovable.app/"
+            src="https://appdireitoestudos.vercel.app/"
             className="w-full h-full border-0"
             title="Loja de Direito"
             sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation"
