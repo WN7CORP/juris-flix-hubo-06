@@ -43,6 +43,9 @@ export const QuickAccessSection = () => {
   };
   return (
     <div className="bg-card/80 backdrop-blur-sm rounded-xl p-6 border border-border/50 text-center mx-4 mb-6 shadow-lg">
+      {/* Título */}
+      <h2 className="text-lg font-semibold text-foreground mb-4">Acesso Rápido</h2>
+      
       {/* Grid compacto de itens */}
       <div className="flex justify-center items-center gap-6 mt-4">
         {quickItems.slice(0, 5).map((item, index) => (
