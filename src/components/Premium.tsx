@@ -3,6 +3,7 @@ import { Crown, Check, Smartphone, Apple, Star, Zap, Shield, Infinity, Sparkles,
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { WhatsAppPremiumSupport } from './WhatsAppPremiumSupport';
 
 const detectDevice = () => {
   const userAgent = navigator.userAgent.toLowerCase();
@@ -83,7 +84,8 @@ export const Premium = () => {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto p-4 space-y-8 min-h-screen bg-gradient-to-br from-background via-background to-premium-primary/5">
+    <>
+      <div className="max-w-5xl mx-auto p-4 space-y-8 min-h-screen bg-gradient-to-br from-background via-background to-premium-primary/5">
       {/* Header estiloso */}
       <div className="text-center space-y-6 pt-8 animate-fade-in-up">
         <div className="relative inline-flex items-center gap-3 bg-gradient-to-r from-premium-primary/20 to-premium-secondary/20 text-premium-primary px-6 py-3 rounded-2xl text-lg font-bold mb-6 border border-premium-primary/30 backdrop-blur-sm animate-premium-glow">
@@ -256,6 +258,10 @@ export const Premium = () => {
           </p>
         </div>
       </div>
-    </div>
+      </div>
+      
+      {/* Componente de Suporte WhatsApp Premium */}
+      <WhatsAppPremiumSupport />
+    </>
   );
 };
