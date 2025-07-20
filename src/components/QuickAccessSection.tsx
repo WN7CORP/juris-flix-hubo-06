@@ -1,13 +1,10 @@
-import { useState } from 'react';
-import { Edit3, Bot, Scale, Monitor, Headphones, BookOpen, Check, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Bot, Scale, Monitor, Headphones, BookOpen } from 'lucide-react';
 import { useNavigation } from '@/context/NavigationContext';
+
 export const QuickAccessSection = () => {
-  const [isEditing, setIsEditing] = useState(false);
-  const {
-    setCurrentFunction
-  } = useNavigation();
-  const [quickItems, setQuickItems] = useState([{
+  const { setCurrentFunction } = useNavigation();
+  
+  const quickItems = [{
     id: 1,
     title: 'Vade Mecum',
     active: true,
@@ -37,36 +34,26 @@ export const QuickAccessSection = () => {
     active: true,
     icon: BookOpen,
     functionName: 'Biblioteca Jurídica'
-  }]);
-  const toggleItem = (id: number) => {
-    setQuickItems(items => items.map(item => item.id === id ? {
-      ...item,
-      active: !item.active
-    } : item));
-  };
+  }];
+
   const handleItemClick = (item: typeof quickItems[0]) => {
-    if (!isEditing && item.active) {
+    if (item.active) {
       setCurrentFunction(item.functionName);
-    } else if (isEditing) {
-      toggleItem(item.id);
     }
   };
-  const handleSave = () => {
-    setIsEditing(false);
-  };
-  const handleCancel = () => {
-    setIsEditing(false);
-  };
-  return <div className="bg-card/80 backdrop-blur-sm rounded-xl p-6 border border-border/50 text-center mx-4 mb-6 shadow-lg">
-      
-
+  return (
+    <div className="bg-card/80 backdrop-blur-sm rounded-xl p-6 border border-border/50 text-center mx-4 mb-6 shadow-lg">
       {/* Grid compacto de itens */}
       <div className="flex justify-center items-center gap-6 mt-4">
-        {quickItems.slice(0, 5).map((item, index) => <div key={item.id} className={`group cursor-pointer transition-all duration-300 ${isEditing ? 'hover:scale-110' : 'hover:scale-105'}`} onClick={() => handleItemClick(item)} style={{
-        animationDelay: `${index * 100}ms`
-      }}>
+        {quickItems.slice(0, 5).map((item, index) => (
+          <div 
+            key={item.id} 
+            className="group cursor-pointer transition-all duration-300 hover:scale-105" 
+            onClick={() => handleItemClick(item)} 
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
             {/* Círculo compacto com ícone */}
-            <div className={`w-12 h-12 mx-auto mb-2 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${item.active ? 'border-yellow-500 bg-yellow-500/10 text-yellow-600 shadow-md' : 'border-border bg-muted text-muted-foreground'} ${isEditing ? 'group-hover:border-yellow-500/70 group-hover:bg-yellow-500/15' : 'group-hover:border-yellow-500/50 group-hover:bg-yellow-500/5'}`}>
+            <div className={`w-12 h-12 mx-auto mb-2 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${item.active ? 'border-yellow-500 bg-yellow-500/10 text-yellow-600 shadow-md' : 'border-border bg-muted text-muted-foreground'} group-hover:border-yellow-500/50 group-hover:bg-yellow-500/5`}>
               <item.icon className={`w-5 h-5 icon-hover-bounce ${item.active ? 'icon-pulse-active' : ''}`} />
             </div>
             
@@ -74,16 +61,9 @@ export const QuickAccessSection = () => {
             <p className={`text-xs font-medium max-w-16 mx-auto leading-tight transition-colors duration-300 ${item.active ? 'text-foreground' : 'text-muted-foreground'}`}>
               {item.title}
             </p>
-            
-            {/* Checkbox compacto para modo de edição */}
-            {isEditing && <div className={`mt-1.5 w-3 h-3 mx-auto rounded-full border flex items-center justify-center transition-all duration-200 ${item.active ? 'bg-yellow-500 border-yellow-500' : 'border-muted-foreground'}`}>
-                {item.active && <Check className="w-2 h-2 text-white" />}
-              </div>}
-          </div>)}
+          </div>
+        ))}
       </div>
-
-      {isEditing && <p className="text-xs text-muted-foreground mt-4 text-center">
-          💡 Clique nos itens para ativar/desativar
-        </p>}
-    </div>;
+    </div>
+  );
 };
