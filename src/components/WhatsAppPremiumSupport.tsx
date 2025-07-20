@@ -4,33 +4,33 @@ import { X } from 'lucide-react';
 const premiumMessageOptions = [
   {
     id: 'premium-info',
-    title: 'Informações sobre o Premium',
-    message: 'Olá! Gostaria de saber mais informações sobre a versão Premium do app Direito. Podem me explicar os benefícios?'
+    title: 'Quero saber sobre o Premium',
+    message: 'Olá! Estou interessado na versão Premium do app Direito. Podem me explicar os benefícios e funcionalidades?'
   },
   {
-    id: 'premium-pagamento',
-    title: 'Dúvidas sobre pagamento',
-    message: 'Olá! Tenho dúvidas sobre como funciona o pagamento da versão Premium. É realmente vitalício?'
+    id: 'premium-preco',
+    title: 'Dúvidas sobre preço e pagamento',
+    message: 'Olá! Gostaria de saber sobre o preço da versão Premium. Como funciona o pagamento único vitalício?'
   },
   {
-    id: 'premium-funcionalidades',
-    title: 'Funcionalidades exclusivas',
-    message: 'Olá! Quero entender melhor quais são as funcionalidades exclusivas da versão Premium do app.'
+    id: 'premium-diferenca',
+    title: 'Qual a diferença da versão gratuita?',
+    message: 'Olá! Quero entender quais são as principais diferenças entre a versão gratuita e a Premium do app.'
   },
   {
-    id: 'premium-suporte',
-    title: 'Suporte técnico Premium',
-    message: 'Olá! Sou usuário Premium e preciso de suporte técnico especializado. Podem me ajudar?'
+    id: 'premium-vale-pena',
+    title: 'Vale a pena comprar?',
+    message: 'Olá! Estou em dúvida se vale a pena investir na versão Premium. Podem me dar mais detalhes?'
   },
   {
-    id: 'premium-upgrade',
-    title: 'Como fazer upgrade',
-    message: 'Olá! Gostaria de fazer o upgrade para Premium mas tenho algumas dúvidas sobre o processo.'
+    id: 'premium-como-comprar',
+    title: 'Como posso comprar?',
+    message: 'Olá! Quero comprar a versão Premium. Como faço para adquirir e ativar no meu dispositivo?'
   },
   {
-    id: 'premium-problema',
-    title: 'Problema com compra Premium',
-    message: 'Olá! Comprei a versão Premium mas estou enfrentando algum problema. Podem me dar suporte?'
+    id: 'premium-desconto',
+    title: 'Há algum desconto disponível?',
+    message: 'Olá! Gostaria de saber se há alguma promoção ou desconto disponível para a versão Premium.'
   }
 ];
 
@@ -82,8 +82,8 @@ export const WhatsAppPremiumSupport = () => {
                   />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">Suporte Premium 👑</h3>
-                  <p className="text-white/90 text-sm">Atendimento especializado para Premium</p>
+                  <h3 className="text-xl font-bold">Dúvidas sobre Premium 👑</h3>
+                  <p className="text-white/90 text-sm">Tire suas dúvidas sobre a versão Premium</p>
                 </div>
               </div>
             </div>
@@ -130,10 +130,10 @@ export const WhatsAppPremiumSupport = () => {
               {/* Informação do Número */}
               <div className="mt-4 text-center">
                 <p className="text-xs text-gray-500">
-                  Suporte Premium: +55 (11) 99189-7603
+                  Vendas Premium: +55 (11) 99189-7603
                 </p>
                 <p className="text-xs text-premium-primary font-medium mt-1">
-                  ✨ Atendimento prioritário para usuários Premium
+                  💬 Entre em contato para adquirir a versão Premium
                 </p>
               </div>
             </div>
