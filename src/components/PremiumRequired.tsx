@@ -1,6 +1,7 @@
-import { Crown, Lock, Star, Zap } from 'lucide-react';
+import { ArrowLeft, Crown, Lock, Star, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { useNavigation } from '@/context/NavigationContext';
 
 const detectDevice = () => {
   const userAgent = navigator.userAgent.toLowerCase();
@@ -26,8 +27,39 @@ interface PremiumRequiredProps {
 }
 
 export const PremiumRequired = ({ functionName }: PremiumRequiredProps) => {
+  const { setCurrentFunction } = useNavigation();
+  
+  const handleBack = () => {
+    setCurrentFunction(null);
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-[60vh] p-4">
+    <div className="min-h-screen bg-background">
+      {/* Header with back button */}
+      <header className="fixed top-0 left-0 right-0 z-40 glass-effect border-b border-border/30">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-8 sm:py-4 py-[10px]">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={handleBack} 
+              className="text-foreground hover:bg-red-500/10 hover:text-red-400 transition-all duration-300 hover:scale-110 h-8 w-8 sm:h-10 sm:w-10"
+            >
+              <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+            </Button>
+            <div>
+              <h1 className="text-lg sm:text-xl font-bold gradient-text">
+                {functionName}
+              </h1>
+              <p className="text-xs sm:text-sm text-muted-foreground">
+                Recurso Premium
+              </p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div className="pt-16 sm:pt-20 flex items-center justify-center min-h-[60vh] p-4">
       <Card className="max-w-md w-full text-center bg-gradient-to-br from-amber-500/10 to-yellow-500/10 border-amber-200 dark:border-amber-800">
         <CardContent className="pt-8 pb-8">
           <div className="space-y-6">
@@ -90,6 +122,7 @@ export const PremiumRequired = ({ functionName }: PremiumRequiredProps) => {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };
