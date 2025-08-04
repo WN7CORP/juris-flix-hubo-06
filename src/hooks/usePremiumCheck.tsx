@@ -7,6 +7,11 @@ const FREE_FUNCTIONS = [
   'Resumos Jurídicos', 
   'Assistente IA',
   'Assistente IA Jurídica',
+  'Dicionário Jurídico',
+  'Audio Aulas',
+  'Simulados OAB',
+  'JurisFlix',
+  'Notícias Jurídicas',
   'Premium', // Para poder acessar a página de upgrade
   'Suporte' // Para poder acessar suporte
 ];
