@@ -3,6 +3,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigation } from '@/context/NavigationContext';
 import { useAppFunctions } from '@/hooks/useAppFunctions';
+import { usePremiumCheck } from '@/hooks/usePremiumCheck';
 import { NoticiasJuridicas } from '@/components/NoticiasJuridicas';
 import { Downloads } from '@/components/Downloads';
 import { PlataformaDesktop } from '@/components/PlataformaDesktop';
@@ -20,6 +21,7 @@ import { useEffect, useState } from 'react';
 export const AppFunction = () => {
   const { currentFunction, setCurrentFunction } = useNavigation();
   const { functions, loading } = useAppFunctions();
+  const { canAccessFunction, requiresPremium } = usePremiumCheck();
   const [functionData, setFunctionData] = useState<any>(null);
   
   useEffect(() => {
@@ -45,6 +47,16 @@ export const AppFunction = () => {
       <>
         <RatingCard />
         {null}
+      </>
+    );
+  }
+
+  // Verificar se o usuário pode acessar a função
+  if (!canAccessFunction(currentFunction)) {
+    return (
+      <>
+        <RatingCard />
+        <PremiumRequired functionName={currentFunction} />
       </>
     );
   }

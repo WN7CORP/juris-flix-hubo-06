@@ -1,7 +1,8 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { useAppFunctions } from '@/hooks/useAppFunctions';
 import { useNavigation } from '@/context/NavigationContext';
-import { ArrowRight, GitBranch, Scale, Bot, Headphones, Library, Monitor, Play, Folder, Newspaper, Film, Brain, BookOpen, FileText, Search, GraduationCap, Calendar, Clock, Award, Target, Bookmark, Download, Upload, Share, Heart, Star, Zap, Shield, Globe, Camera, Music, Video, Image, File, Archive, Code, Database, Hammer, ShoppingBag, Users, Sparkles } from 'lucide-react';
+import { usePremiumCheck } from '@/hooks/usePremiumCheck';
+import { ArrowRight, GitBranch, Scale, Bot, Headphones, Library, Monitor, Play, Folder, Newspaper, Film, Brain, BookOpen, FileText, Search, GraduationCap, Calendar, Clock, Award, Target, Bookmark, Download, Upload, Share, Heart, Star, Zap, Shield, Globe, Camera, Music, Video, Image, File, Archive, Code, Database, Hammer, ShoppingBag, Users, Sparkles, Crown } from 'lucide-react';
 
 // Definição das categorias e suas funções
 const categoriesConfig = {
@@ -69,6 +70,7 @@ export const FeaturesGrid = () => {
   const {
     setCurrentFunction
   } = useNavigation();
+  const { requiresPremium } = usePremiumCheck();
   const handleFunctionClick = (funcao: string) => {
     setCurrentFunction(funcao);
   };
@@ -152,14 +154,23 @@ export const FeaturesGrid = () => {
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-8">
                 {categoryFunctions.map((func, index) => {
               const Icon = getIconForFunction(func.funcao, func.id);
-              return <Card key={func.id} className="card-legal group cursor-pointer overflow-hidden animate-fade-in hover:animate-legal-float border-0" onClick={() => handleFunctionClick(func.funcao)} style={{
+              const isPremiumRequired = requiresPremium(func.funcao);
+              
+              return <Card key={func.id} className="card-legal group cursor-pointer overflow-hidden animate-fade-in hover:animate-legal-float border-0 relative" onClick={() => handleFunctionClick(func.funcao)} style={{
                 animationDelay: `${categoryIndex * 100 + index * 50}ms`
               }}>
+                      {/* Badge Premium */}
+                      {isPremiumRequired && (
+                        <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full flex items-center justify-center z-20 shadow-lg border-2 border-white">
+                          <Crown className="w-3 h-3 text-white" />
+                        </div>
+                      )}
+                      
                       <CardContent className="p-4 sm:p-6 text-center relative">
                         {/* Gradient background effect */}
-                        <div className={`absolute inset-0 bg-gradient-to-br ${categoryConfig.gradient} opacity-10 group-hover:opacity-20 transition-opacity duration-500 rounded-lg`} />
+                        <div className={`absolute inset-0 bg-gradient-to-br ${categoryConfig.gradient} opacity-10 group-hover:opacity-20 transition-opacity duration-500 rounded-lg ${isPremiumRequired ? 'bg-gradient-to-br from-amber-400/20 to-yellow-500/20' : ''}`} />
                         
-                        <div className={`w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-xl bg-gradient-to-br ${categoryConfig.gradient} flex items-center justify-center group-hover:scale-110 transition-all duration-500 relative shadow-lg`}>
+                        <div className={`w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-xl bg-gradient-to-br ${isPremiumRequired ? 'from-amber-500 to-yellow-600' : categoryConfig.gradient} flex items-center justify-center group-hover:scale-110 transition-all duration-500 relative shadow-lg`}>
                           <Icon className="h-6 w-6 sm:h-8 sm:w-8 text-white transition-colors duration-300 icon-hover-bounce icon-float-gentle" />
                           
                           {/* Professional hover arrow */}
@@ -168,8 +179,9 @@ export const FeaturesGrid = () => {
                           </div>
                         </div>
                         
-                        <h3 className="font-semibold text-sm sm:text-base lg:text-lg mb-2 text-foreground group-hover:text-primary transition-colors duration-500 line-clamp-2">
+                        <h3 className={`font-semibold text-sm sm:text-base lg:text-lg mb-2 transition-colors duration-500 line-clamp-2 ${isPremiumRequired ? 'text-amber-600 group-hover:text-amber-700' : 'text-foreground group-hover:text-primary'}`}>
                           {func.funcao}
+                          {isPremiumRequired && <span className="ml-1 text-xs text-amber-500">PRO</span>}
                         </h3>
                         
                         <p className="text-xs sm:text-sm text-muted-foreground group-hover:text-muted-foreground/80 transition-colors duration-500 line-clamp-2">
@@ -177,7 +189,7 @@ export const FeaturesGrid = () => {
                         </p>
 
                         {/* Professional interactive border effect */}
-                        <div className={`absolute inset-0 rounded-lg border-2 border-transparent group-hover:border-${categoryConfig.color}-500/30 transition-all duration-500`} />
+                        <div className={`absolute inset-0 rounded-lg border-2 border-transparent group-hover:border-${isPremiumRequired ? 'amber' : categoryConfig.color}-500/30 transition-all duration-500`} />
                       </CardContent>
                     </Card>;
             })}

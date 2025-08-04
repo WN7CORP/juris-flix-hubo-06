@@ -9,10 +9,11 @@ import { X, Home, Scale, Headphones, Library, Bot, User, Settings, HelpCircle,
          DollarSign, Euro, PoundSterling, CreditCard, ShoppingCart, Package,
          Truck, Map, MapPin, Navigation, Compass, Route, Car,
          Plane, Ship, Train, Bus, Bike, Footprints, Clock3, Timer,
-         Watch, AlarmClock, Calendar as CalendarIcon, CalendarDays, Hammer } from 'lucide-react';
+         Watch, AlarmClock, Calendar as CalendarIcon, CalendarDays, Hammer, Crown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigation } from '@/context/NavigationContext';
 import { useAppFunctions } from '@/hooks/useAppFunctions';
+import { usePremiumCheck } from '@/hooks/usePremiumCheck';
 
 interface MobileSidebarProps {
   isOpen: boolean;
@@ -77,6 +78,7 @@ const getUniqueIconForFunction = (funcao: string, index: number) => {
 export const MobileSidebar = ({ isOpen, onClose }: MobileSidebarProps) => {
   const { setCurrentFunction } = useNavigation();
   const { functions } = useAppFunctions();
+  const { requiresPremium } = usePremiumCheck();
 
   const handleItemClick = (funcao: string | null) => {
     setCurrentFunction(funcao);
@@ -153,11 +155,13 @@ export const MobileSidebar = ({ isOpen, onClose }: MobileSidebarProps) => {
               {/* All Functions with staggered animations */}
               {functions.map((func, index) => {
                 const Icon = getUniqueIconForFunction(func.funcao, index);
+                const isPremiumRequired = requiresPremium(func.funcao);
+                
                 return (
                   <button
                     key={func.id}
                     onClick={() => handleItemClick(func.funcao)}
-                    className={`w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all duration-500 hover:bg-primary/10 hover:text-primary group transform hover:scale-105 animate-bounce-in hover:shadow-lg ${
+                    className={`w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all duration-500 hover:bg-primary/10 hover:text-primary group transform hover:scale-105 animate-bounce-in hover:shadow-lg relative ${
                       isOpen 
                         ? 'translate-y-0 opacity-100' 
                         : 'translate-y-4 opacity-0'
@@ -166,14 +170,24 @@ export const MobileSidebar = ({ isOpen, onClose }: MobileSidebarProps) => {
                       transitionDelay: isOpen ? `${(index + 1) * 75}ms` : '0ms'
                     }}
                   >
-                    <div className="p-2 rounded-lg bg-muted/50 group-hover:bg-primary/15 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 relative overflow-hidden">
+                    {/* Badge Premium */}
+                    {isPremiumRequired && (
+                      <div className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full flex items-center justify-center z-20 shadow-md border border-white">
+                        <Crown className="w-2.5 h-2.5 text-white" />
+                      </div>
+                    )}
+                    
+                    <div className={`p-2 rounded-lg bg-muted/50 group-hover:bg-primary/15 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 relative overflow-hidden ${isPremiumRequired ? 'bg-amber-500/10 border border-amber-500/20' : ''}`}>
                       <Icon className="h-5 w-5 group-hover:animate-pulse relative z-10" />
                       {/* Sparkle effect */}
                       <div className="absolute top-0 right-0 w-1 h-1 bg-amber-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping transition-opacity duration-500" />
                     </div>
-                    <span className="font-medium text-sm group-hover:font-semibold transition-all duration-300 group-hover:text-primary">
-                      {func.funcao}
-                    </span>
+                    <div className="flex-1">
+                      <span className={`font-medium text-sm group-hover:font-semibold transition-all duration-300 group-hover:text-primary block ${isPremiumRequired ? 'text-amber-700' : ''}`}>
+                        {func.funcao}
+                        {isPremiumRequired && <span className="ml-1 text-xs text-amber-500">PRO</span>}
+                      </span>
+                    </div>
                     {/* Arrow indicator */}
                     <div className="ml-auto w-2 h-2 bg-primary/60 rounded-full opacity-0 group-hover:opacity-100 animate-pulse transition-opacity duration-500" />
                   </button>

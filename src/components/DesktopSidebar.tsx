@@ -1,12 +1,13 @@
 
 import { 
   Scale, Bot, Library, Headphones, Brain, Monitor, 
-  ChevronLeft, ChevronRight, Home, Star, Play, FileText, Newspaper, Download 
+  ChevronLeft, ChevronRight, Home, Star, Play, FileText, Newspaper, Download, Crown 
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigation } from '@/context/NavigationContext';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAppFunctions } from '@/hooks/useAppFunctions';
+import { usePremiumCheck } from '@/hooks/usePremiumCheck';
 import { useMemo, useCallback } from 'react';
 
 interface DesktopSidebarProps {
@@ -17,6 +18,7 @@ interface DesktopSidebarProps {
 export const DesktopSidebar = ({ collapsed, onToggle }: DesktopSidebarProps) => {
   const { setCurrentFunction } = useNavigation();
   const { functions, loading } = useAppFunctions();
+  const { requiresPremium } = usePremiumCheck();
 
   const getFunctionName = useCallback((searchTerms: string[]) => {
     console.log('DesktopSidebar - Buscando função para termos:', searchTerms);
@@ -194,6 +196,7 @@ export const DesktopSidebar = ({ collapsed, onToggle }: DesktopSidebarProps) => 
               <div className="space-y-1">
                 {section.items.map((item) => {
                   const Icon = item.icon;
+                  const isPremiumRequired = requiresPremium(item.function);
                   
                   console.log(`DesktopSidebar - Renderizando item ${item.title}: function=${item.function}`);
                   
@@ -201,15 +204,23 @@ export const DesktopSidebar = ({ collapsed, onToggle }: DesktopSidebarProps) => 
                     <button
                       key={item.title}
                       onClick={() => handleItemClick(item.function, item.title)}
-                      className={`w-full flex items-center gap-3 h-10 px-3 rounded-lg text-left hover:bg-accent hover:text-accent-foreground transition-colors ${
+                      className={`relative w-full flex items-center gap-3 h-10 px-3 rounded-lg text-left hover:bg-accent hover:text-accent-foreground transition-colors ${
                         collapsed ? 'justify-center px-0' : 'justify-start'
                       }`}
                     >
-                      <Icon className="h-5 w-5 text-primary flex-shrink-0" />
+                      {/* Badge Premium */}
+                      {isPremiumRequired && !collapsed && (
+                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full flex items-center justify-center z-10 shadow-md border border-white">
+                          <Crown className="w-2 h-2 text-white" />
+                        </div>
+                      )}
+                      
+                      <Icon className={`h-5 w-5 flex-shrink-0 ${isPremiumRequired ? 'text-amber-600' : 'text-primary'}`} />
                       
                       {!collapsed && (
-                        <span className="text-sm font-medium truncate">
+                        <span className={`text-sm font-medium truncate ${isPremiumRequired ? 'text-amber-700' : ''}`}>
                           {item.title}
+                          {isPremiumRequired && <span className="ml-1 text-xs text-amber-500">PRO</span>}
                         </span>
                       )}
                     </button>
